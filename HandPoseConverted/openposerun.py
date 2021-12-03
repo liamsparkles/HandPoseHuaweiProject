@@ -1,10 +1,10 @@
 import cv2
 import time
 import numpy as np
+from model_processor import ModelProcessor
 
 
-protoFile = "hand/pose_deploy.prototxt"
-weightsFile = "hand/pose_iter_102000.caffemodel"
+modelFile = "hand/openposemodel.om"
 nPoints = 22
 POSE_PAIRS = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [0, 9], [9, 10], [10, 11],
               [11, 12], [0, 13], [13, 14], [14, 15], [15, 16], [0, 17], [17, 18], [18, 19], [19, 20]]
@@ -27,7 +27,8 @@ inWidth = int(((aspect_ratio*inHeight)*8)//8)
 vid_writer = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 15,
                              (frame.shape[1], frame.shape[0]))
 
-net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
+# net = cv2.dnn.readNetFromCaffe(protoFile, weightsFile)
+model = 
 k = 0
 while 1:
     k += 1
