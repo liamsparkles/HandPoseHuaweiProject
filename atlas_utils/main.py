@@ -1,19 +1,16 @@
 import os
 import cv2
-import numpy as np
 import argparse
 import sys
 sys.path.append('..')
-from model_processor import ModelProcessor
-import acl
-from acl_resource import AclResource
+from atlas_utils.model_processor import ModelProcessor
+from HandPoseConverted.acl_resource import AclResource
 
 MODEL_PATH = "./model/googlenet.om"
 DATA_PATH = './data/dog1.jpg'
 
-def execute(model_path, frames_input_src, output_dir):
-    
 
+def execute(model_path, frames_input_src, output_dir):
     ## Initialization ##
     #initialize acl runtime 
     acl_resource = AclResource()
@@ -23,8 +20,8 @@ def execute(model_path, frames_input_src, output_dir):
     # parameters for model path and model inputs
     model_parameters = {
         'model_dir': model_path,
-        'width': 224, # model input width      
-        'height': 224, # model input height
+        'width': 224,  # model input width
+        'height': 224,  # model input height
     }
     # perpare model instance: init (loading model from file to memory)
     # model_processor: preprocessing + model inference + postprocessing
@@ -40,7 +37,7 @@ def execute(model_path, frames_input_src, output_dir):
     category = model_processor.predict(img_original)
 
     # Save the detected results
-    cv2.putText(img_original,category,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
+    cv2.putText(img_original, category, (50, 50), cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),2)
     cv2.imwrite(os.path.join(args.output_dir, 'Result.jpg'), img_original)
     
 

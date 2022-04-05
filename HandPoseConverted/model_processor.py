@@ -1,13 +1,11 @@
 import os
 import cv2
 import numpy as np
-import argparse
 import sys
 
 sys.path.append('../')
 
 from acl_model import Model
-from image_net_classes import get_image_net_class
 
 
 class ModelProcessor:
@@ -31,33 +29,30 @@ class ModelProcessor:
         infer_output = self.model.execute([model_input]) 
 
         # postprocessing: 
-        category = self.post_process(infer_output)
+        categories = self.post_process(infer_output)
 
-        return category
+        return categories
 
     def preprocess(self, img_original):
         """
         preprocessing: resize image to model required size, and normalize value
         """
-        scaled_img_data = cv2.resize(img_original, (self._model_width, self._model_height))
-        normalized_img = scaled_img_data - np.array([123, 117, 104])
+        # scaled_img_data = cv2.resize(img_original, (self._model_width, self._model_height))
+        # normalized_img = scaled_img_data - np.array([123, 117, 104])
+
+        image_expanded = np.expand_dims(img_original, axis=0)
         # Caffe model after conversion, need input to be NCHW; the orignal image is NHWC,
         # need to be transposed (use .copy() to change memory format)
-        preprocessed_img = np.asarray(normalized_img, dtype=np.float16).transpose([2,0,1]).copy()
+        # preprocessed_img = np.asarray(normalized_img, dtype=np.float16).transpose([2,0,1]).copy()
         
-        return preprocessed_img
+        return image_expanded
 
     def post_process(self, infer_output):
-        print("post process")
-        data = infer_output[0]
-        vals = data.flatten()
-        top_k = vals.argsort()[-1:-6:-1]
-        print("======== top5 inference results: =============")
-        for n in top_k:
-            object_class = get_image_net_class(n)
-            print("label:%d  confidence: %f, class: %s" % (n, vals[n], object_class))
-        
-        object_class = get_image_net_class(top_k[0])
-        return object_class
+        print("we reached post-processing")
+        print(self._model_width)
+        # data = infer_output[0]
+        # vals = data.flatten()
+        # top_k = vals.argsort()[-1:-6:-1]
+        return infer_output, 1
 
 

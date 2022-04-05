@@ -1,17 +1,13 @@
 from utils import detector_utils as detector_utils
-from utils import pose_classification_utils as classifier
+# from utils import pose_classification_utils as classifier
 import cv2
-import tensorflow as tf
-import multiprocessing
+from model_processor import ModelProcessor
 from multiprocessing import Queue, Pool
-import time
 from utils.detector_utils import WebcamVideoStream
 import datetime
 import argparse
-import os
-os.environ['KERAS_BACKEND'] = 'tensorflow'
-import keras
 import gui
+from acl_resource import AclResource
 
 frame_processed = 0
 score_thresh = 0.18
@@ -20,18 +16,17 @@ score_thresh = 0.18
 # does detection on images in an input queue and puts it on an output queue
 
 
-def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_processed):
-    print(">> loading frozen model for worker")
-    detection_graph, sess = detector_utils.load_inference_graph()
-    sess = tf.compat.v1.Session(graph=detection_graph)
-
-    print(">> loading keras model for worker")
-    try:
-        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_wGarbage_10.h5")
-    except Exception as e:
-        print(e)
-        print("Failed Keras Graph load, exiting")
-        return
+def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_processed, model_detect: ModelProcessor):
+    # print(">> loading frozen model for worker")
+    # detection_graph, sess = detector_utils.load_inference_graph()
+    # sess = tf.compat.v1.Session(graph=detection_graph)
+    # print(">> loading keras model for worker")
+    # try:
+    #     model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_wGarbage_10.h5")
+    # except Exception as e:
+    #     print(e)
+    #     print("Failed Keras Graph load, exiting")
+    #     return
 
     while True:
         # print("> ===== in worker loop, frame ", frame_processed)
@@ -40,8 +35,8 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             # Actual detection. Variable boxes contains the bounding box cordinates for hands detected,
             # while scores contains the confidence for each of these boxes.
             # Hint: If len(boxes) > 1 , you may assume you have found atleast one hand (within your score threshold)
-            boxes, scores = detector_utils.detect_objects(
-                frame, detection_graph, sess)
+            # boxes, scores = detector_utils.detect_objects(frame, detection_graph, sess)
+            scores, boxes = model_detect.predict(frame)
 
             # get region of interest
             res = detector_utils.get_box_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
@@ -51,10 +46,10 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             detector_utils.draw_box_on_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
             
-            # classify hand pose
-            if res is not None:
-                class_res = classifier.classify(model, classification_graph, session, res)
-                inferences_q.put(class_res)       
+            # # classify hand pose
+            # if res is not None:
+            #     class_res = classifier.classify(model, classification_graph, session, res)
+            #     inferences_q.put(class_res)
             
             # add frame annotated with bounding box to queue
             cropped_output_q.put(res)
@@ -62,11 +57,9 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             frame_processed += 1
         else:
             output_q.put(frame)
-    sess.close()
 
 
-if __name__ == '__main__':
-
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-src',
@@ -155,6 +148,16 @@ if __name__ == '__main__':
             print(line)
             poses.append(line)
 
+    acl_resource = AclResource()
+    acl_resource.init()
+    model_parameters = {
+        'model_dir': "hand_inference_graph/frozen_inference_graph.pb",
+        'width': 224,  # model input width
+        'height': 224,  # model input height
+    }
+    # perpare model instance: init (loading model from file to memory)
+    # model_processor: preprocessing + model inference + postprocessing
+    model_processor = ModelProcessor(acl_resource, model_parameters)
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
@@ -177,7 +180,7 @@ if __name__ == '__main__':
         output_frame = output_q.get()
         cropped_output = cropped_output_q.get()
 
-        inferences      = None
+        inferences = None
 
         try:
             inferences = inferences_q.get_nowait()
@@ -235,3 +238,7 @@ if __name__ == '__main__':
     pool.terminate()
     video_capture.stop()
     cv2.destroyAllWindows()
+
+
+if __name__ == '__main__':
+    main()
