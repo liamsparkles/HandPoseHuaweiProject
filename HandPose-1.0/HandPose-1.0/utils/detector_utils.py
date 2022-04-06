@@ -92,6 +92,7 @@ def detect_objects(image_np, detection_graph, sess):
 
     image_np_expanded = np.expand_dims(image_np, axis=0)
 
+
     (boxes, scores, classes, num) = sess.run(
         [detection_boxes, detection_scores,
             detection_classes, num_detections],

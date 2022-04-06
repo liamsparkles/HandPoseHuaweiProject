@@ -177,7 +177,7 @@ if __name__ == '__main__':
         output_frame = output_q.get()
         cropped_output = cropped_output_q.get()
 
-        inferences      = None
+        inferences = None
 
         try:
             inferences = inferences_q.get_nowait()
