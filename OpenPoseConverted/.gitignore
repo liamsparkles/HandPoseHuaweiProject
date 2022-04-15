@@ -100,4 +100,3 @@ Poses/
 .vscode/launch.json
 Dataset/
 hand_inference_graph
-model
