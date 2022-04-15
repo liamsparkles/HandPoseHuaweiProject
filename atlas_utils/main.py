@@ -4,7 +4,7 @@ import argparse
 import sys
 sys.path.append('..')
 from atlas_utils.model_processor import ModelProcessor
-from HandPoseConverted.acl_resource import AclResource
+from OpenPoseConverted.acl_resource import AclResource
 
 MODEL_PATH = "./model/googlenet.om"
 DATA_PATH = './data/dog1.jpg'
