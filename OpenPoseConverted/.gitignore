@@ -101,5 +101,3 @@ Poses/
 Dataset/
 hand_inference_graph
 model
-inputs
-outputs
