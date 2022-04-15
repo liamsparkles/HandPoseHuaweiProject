@@ -48,4 +48,6 @@ Depends largely on the input video, for my tests, it ranged from 15-24 FPS. I wo
 
 This project was adapted from Vikas Gupta's tutorial on Hand Keypoint Detection using Deep Learning and OpenCV.
 
+```
 @misc{gupta_2018, title={Hand keypoint detection using Deep Learning and opencv}, url={https://learnopencv.com/hand-keypoint-detection-using-deep-learning-and-opencv/}, journal={LearnOpenCV}, author={Gupta, Vikas}, year={2018}, month={10}} 
+```
