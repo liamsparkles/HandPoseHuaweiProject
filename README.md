@@ -27,7 +27,7 @@ See the *requirements.txt* file or simply run:
 
 ### While logged onto an Atlas, run the following commands to run the application
 
-To run the als.mp4 file, simply run (using python3):
+To run the als.mp4 file, navigate inside the OpenPoseConverted folder and simply run (using python3):
 
     python openposerun_optimized_delayshift.py
     
