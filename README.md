@@ -6,13 +6,13 @@ Code to execute the open pose model on the Atlas 200 DK board.
 
 Make sure you have access to a Atlas200DK, that's the first step. Look through this file to get setup with the rest
 
-### Requirements
-See the *requirements.txt* file or simply run:
+## Documentation
 
-    pip install -r requirements.txt
+Check the report.pdf to view a more extensive documentation on this project. You can also see the report overleaf project at 
+https://www.overleaf.com/read/sdqcsmygsxqp
 
 ### File structure
-.  
+.OpenPoseConverted  
 ├── model &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the CaffeModel files**  
 ├── inputs
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Containes the input video examples**  
@@ -23,7 +23,6 @@ See the *requirements.txt* file or simply run:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Additional Multi-processing approaches**  
 └── openposerun_optimized_delayshift.py
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Python file to run the application**  
-
 
 ### While logged onto an Atlas, run the following commands to run the application
 
@@ -37,7 +36,6 @@ To run your's, or another example file, run:
     
 There's no need to download, or setup an offline model file, the python code will automatically do it for you if it's not already there. For different
 resolutions of videos, a new offline model will be created.
-
 
 ## Multi-threading Approach
 
