@@ -4,11 +4,11 @@ Code to execute the open pose model on the Atlas 200 DK board.
 
 ## Getting Started
 
-Make sure you have access to a Atlas200DK, that's the first step. Look through this file to get setup with the rest
+Make sure you have access to an Atlas200DK, that's the first step. Look through this file to get setup with the rest
 
 ## Documentation
 
-Check the report.pdf to view a more extensive documentation on this project. You can also see the report overleaf project at 
+Check the report.pdf to view more extensive documentation on this project. You can also see the report overleaf project at 
 https://www.overleaf.com/read/sdqcsmygsxqp
 
 ### File structure
@@ -26,15 +26,15 @@ https://www.overleaf.com/read/sdqcsmygsxqp
 
 ### While logged onto an Atlas, run the following commands to run the application
 
-To run the als.mp4 file, navigate inside the OpenPoseConverted folder and simply run (using python3):
+To run the als.mp4 file, navigate inside the OpenPoseConverted folder and run (using python3):
 
     python openposerun_optimized_delayshift.py
     
-To run your's, or another example file, run:
+To run yours, or another example file, run the following:
 
     python openposerun_optimized_delayshift.py --input PATH/TO/FILE.mp4
     
-There's no need to download, or setup an offline model file, the python code will automatically do it for you if it's not already there. For different
+There's no need to download, or setup an offline model file, the Python code will automatically do it for you if it's not already there. For different
 resolutions of videos, a new offline model will be created.
 
 ## Multi-threading Approach
@@ -43,7 +43,7 @@ resolutions of videos, a new offline model will be created.
 
 ## Performance
 
-Depends largely on the input video, for my tests, it ranged from 15-24 FPS. I would encourage you to modify the `imHeight` variable to create a larger or smaller model. The accuracy is proportional to the size of the image, and the frame-rate is inversely proportional to the size of the image (video stream).
+Depends mainly on the input video, for my tests, it ranged from 15-24 FPS. I would encourage you to modify the `imHeight` variable to create a larger or smaller model. The accuracy is proportional to the size of the image, and the frame-rate is inversely proportional to the size of the image (video stream).
 
 ## References
 
